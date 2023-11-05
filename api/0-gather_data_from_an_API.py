@@ -9,8 +9,7 @@ Usage:
     ./0-gather_data_from_an_API.py <employee_id>
 """
 
-if __name__ == "__main__":
-    # Check for the correct number of command-line arguments and whether the argument is a valid integer
+def main():
     if len(argv) != 2 or not argv[1].isdigit():
         print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
     else:
@@ -40,4 +39,7 @@ if __name__ == "__main__":
             print(f"Employee {employee_name} is done with tasks({done_tasks}/{total_tasks}):")
             for task in todo_data:
                 if task.get("completed"):
-                    print(f"\t {task.get('title')}")
+                    print(f"\t{task.get('title')}")
+
+if __name__ == "__main__":
+    main()
