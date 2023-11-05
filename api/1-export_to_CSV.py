@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 """
-This script fetches and displays an employee's TODO list and exports the data in CSV format.
+This script fetches and displays an employee's TODO
+list and exports the data in CSV format.
 
 Usage:
     ./1-export_to_CSV.py <employee_id>
@@ -10,6 +11,7 @@ Usage:
 import requests
 import csv
 from sys import argv
+
 
 def main():
     if len(argv) != 2 or not argv[1].isdigit():
@@ -43,17 +45,24 @@ def main():
             # Open the CSV file for writing
             with open(csv_filename, mode="w", newline="") as csv_file:
                 writer = csv.writer(csv_file)
-                
                 # Write the header row to the CSV file
-                writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-                
+                writer.writerow([
+                    "USER_ID",
+                    "USERNAME",
+                    "TASK_COMPLETED_STATUS",
+                    "TASK_TITLE"
+                ])
                 # Write the task data to the CSV file
                 for task in todo_data:
                     task_id = task.get("id")
                     task_title = task.get("title")
                     task_completed = task.get("completed")
-                    
-                    writer.writerow([user_id, username, task_completed, task_title])
+                    writer.writerow([
+                    user_id,
+                    username,
+                    task_completed,
+                    task_title
+                ])
 
             print(f"Data exported to {csv_filename}")
 
