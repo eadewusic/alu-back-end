@@ -20,7 +20,7 @@ if __name__ == "__main__":
         print("Usage: ./1-export_to_CSV.py <employee_id>")
         sys.exit(1)
 
-    employee_id = sys.argv[1]
+    employee_id = int(sys.argv[1])
 
     # Construct the URLs for API requests
     todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
