@@ -46,7 +46,12 @@ if __name__ == "__main__":
         data_writer = csv.writer(
             csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL
         )
-        
+
         # Iterate through the tasks and write to the CSV file
         for task in data_todo:
-            data_writer.writerow([task["userId"], data_user["username"], task["completed"], task["title"]])
+            data_writer.writerow([
+                task["userId"],
+                data_user["username"],
+                task["completed"],
+                task["title"]
+            ])
