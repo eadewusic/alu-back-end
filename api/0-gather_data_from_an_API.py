@@ -19,10 +19,8 @@ def main():
         user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}")
         todos_response = requests.get(f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}")
 
-        # Check if user data is found
         if user_response.status_code != 200:
-            print("User not found")
-        # Check if task data is found
+            print("Employee not found")
         elif todos_response.status_code != 200:
             print("Tasks not found")
         else:
