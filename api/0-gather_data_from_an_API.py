@@ -2,7 +2,12 @@
 import requests
 from sys import argv
 
-# This is a module-level docstring. It provides an overview of the script's purpose.
+"""
+This script fetches and displays an employee's TODO list progress using a REST API.
+
+Usage:
+    ./0-gather_data_from_an_API.py <employee_id>
+"""
 
 if __name__ == "__main__":
     # Check for the correct number of command-line arguments and whether the argument is a valid integer
