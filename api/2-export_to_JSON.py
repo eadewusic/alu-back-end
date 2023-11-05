@@ -10,7 +10,7 @@ Requirements:
 Records all tasks that are owned by this employee
 
 Format must be:
-{ "USER_ID": [{"task": "TASK_TITLE", 
+{"USER_ID": [{"task": "TASK_TITLE", 
 "completed": TASK_COMPLETED_STATUS,
 "username": "USERNAME"},
 {"task": "TASK_TITLE",
@@ -31,7 +31,8 @@ if __name__ == "__main__":
     employee_id = sys.argv[1]
 
     # Construct the URLs for API requests
-    todo_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    todo_url = f"https://jsonplaceholder.typicode.com/todos?" \
+               f"userId={employee_id}"
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
 
     try:
