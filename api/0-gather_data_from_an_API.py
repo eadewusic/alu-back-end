@@ -14,7 +14,7 @@ def main():
     if len(argv) != 2 or not argv[1].isdigit():
         print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
     else:
-        employee_id = int(argv[1)
+        employee_id = int(argv[1])
 
         # Fetch employee data and their tasks from the REST API
         user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}")
@@ -32,24 +32,13 @@ def main():
             employee_name = user_data.get("name")
             # Count the total number of tasks and completed tasks
             total_tasks = len(todo_data)
-            done_tasks = [task for task in todo_data if task.get("completed")]
+            done_tasks = sum(1 for task in todo_data if task.get("completed"))
 
             # Print the progress information in the required format
-            print(f"Employee {employee_name} is done with tasks({len(done_tasks)}/{total_tasks}):")
-            for task in done_tasks:
-                title = task.get("title")
-                if len(title) <= 50:
-                    print(f"\t{title}")
-                else:
-                    print(f"\t{title[:50]}...")
-                # Add tasks that were not printed in the output
-                todo_data.remove(task)
+            print(f"Employee {employee_name} is done with tasks({done_tasks}/{total_tasks}):")
             for task in todo_data:
-                title = task.get("title")
-                if len(title) <= 50:
-                    print(f"\t{title}")
-                else:
-                    print(f"\t{title[:50]}...")
+                if task.get("completed"):
+                    print(f"\t{task.get('title')}")
 
 if __name__ == "__main__":
     main()
