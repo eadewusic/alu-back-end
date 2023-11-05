@@ -1,73 +1,58 @@
 #!/usr/bin/python3
-
 """
-Fetches an employee's TODO list and exports the data in CSV format.
+Using what you did in the task #0,
+extend your Python script to export
+data in the CSV format.
 
-Usage:
-    ./1-export_to_CSV.py <employee_id>
+Requirements:
+
+Records all tasks that are owned by this employee
+Format must be:
+"USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
+File name must be: USER_ID.csv
 """
-
-import csv
-import requests
-from sys import argv
-
-
-def main():
-    if len(argv) != 2 or not argv[1].isdigit():
-        print("Usage: ./1-export_to_CSV.py <employee_id>")
-    else:
-        employee_id = int(argv[1])
-
-        base_url = "https://jsonplaceholder.typicode.com/users"
-        user_url = f"{base_url}/{employee_id}"
-        todos_url = f"{base_url}/{employee_id}/todos"
-        
-    try:
-        # Fetch employee data and their tasks from the REST API
-        user_response = requests.get(user_url)
-        todos_response = requests.get(todos_url)
-
-        user_response.raise_for_status()
-        todos_response.raise_for_status()
-
-        user_data = user_response.json()
-        todo_data = todos_response.json()
-
-        # Extract user information
-        user_id = user_data.get("id")
-        username = user_data.get("username")
-
-        # Define the CSV filename based on user_id
-        csv_filename = f"{user_id}.csv"
-
-        # Open the CSV file for writing
-        with open(csv_filename, mode="w", newline="") as csv_file:
-            writer = csv.writer(csv_file)
-                # Write the header row to the CSV file
-                writer.writerow([
-                    "USER_ID",
-                    "USERNAME",
-                    "TASK_COMPLETED_STATUS",
-                    "TASK_TITLE"
-                ])
-                # Write the task data to the CSV file
-                for task in todo_data:
-                    task_id = task.get("id")
-                    task_title = task.get("title")
-                    task_completed = task.get("completed")
-                    writer.writerow([
-                        user_id,
-                        username,
-                        task_completed,
-                        task_title
-                    ])
-
-            print(f"Data exported to {csv_filename}")
-
-        except requests.exceptions.RequestException as e:
-            print(f"An error occurred while making a request: {e}")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
 if __name__ == "__main__":
-    main()
+    import csv
+    import requests
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: ./1-export_to_CSV.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = sys.argv[1]
+
+    # Construct the URLs for API requests
+    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+
+    try:
+        # Make API requests to fetch data
+        todos_response = requests.get(todos_url)
+        user_response = requests.get(user_url)
+
+        todos_response.raise_for_status()
+        user_response.raise_for_status()
+
+        todos_data = todos_response.json()
+        user_data = user_response.json()
+
+        # Prepare the CSV filename based on user ID
+        csv_filename = f"{employee_id}.csv"
+
+        with open(csv_filename, 'w', newline='') as csvfile:
+            data_writer = csv.writer(csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
+
+            # Write the CSV header
+            data_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+
+            # Iterate through TODO list data and write to CSV
+            for todo in todos_data:
+                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"]])
+
+        print(f"Data exported to {csv_filename}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred while making a request: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
