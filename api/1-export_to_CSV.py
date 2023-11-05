@@ -16,51 +16,29 @@ if __name__ == "__main__":
     import requests
     import sys
 
-    if len(sys.argv) != 2:
-        print("Usage: ./1-export_to_CSV.py <employee_id>")
-        sys.exit(1)
+    # Define the base URLs for API requests
+    todo_url = "https://jsonplaceholder.typicode.com/todos"
+    user_url = f"https://jsonplaceholder.typicode.com/users/{sys.argv[1]}"
+    
+    # Create a payload with the 'userId' query parameter
+    payload = {"userId": sys.argv[1]}
 
-    employee_id = int(sys.argv[1])
+    # Make API requests to fetch data
+    response_todo = requests.get(todo_url, params=payload)
+    response_user = requests.get(user_url)
 
-    # Construct the URLs for API requests
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    # Convert API responses to JSON format
+    data_todo = response_todo.json()
+    data_user = response_user.json()
 
-    try:
-        # Make API requests to fetch data
-        todos_response = requests.get(todos_url)
-        user_response = requests.get(user_url)
+    # Define the CSV filename based on user ID
+    filename = f"{sys.argv[1]}.csv"
 
-        todos_response.raise_for_status()
-        user_response.raise_for_status()
-
-        todos_data = todos_response.json()
-        user_data = user_response.json()
-
-        # Prepare the CSV filename based on user ID
-        csv_filename = f"{employee_id}.csv"
-
-        with open(csv_filename, 'w', newline='') as csvfile:
-            data_writer = csv.writer(csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
-
-            # Write the CSV header
-            data_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-
-            # Initialize counters for completed tasks and tasks in CSV
-            completed_tasks = 0
-
-            # Iterate through TODO list data and write to CSV
-            for todo in todos_data:
-                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"]]
-                if todo["completed"]:
-                    completed_tasks += 1
-
-        # Print a message indicating successful export
-        print(f"Data exported to {csv_filename}")
-        print(f"Number of tasks in CSV: OK")
-        print(f"User ID and Username: OK")
-
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred while making a request: {e}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    # Open the CSV file for writing
+    with open(filename, 'w', newline='') as csvfile:
+        # Create a CSV writer object
+        data_writer = csv.writer(csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
+        
+        # Iterate through the tasks and write to the CSV file
+        for task in data_todo:
+            data_writer.writerow([task["userId"], data_user["username"], task["completed"], task["title"]])
