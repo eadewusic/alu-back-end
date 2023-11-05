@@ -5,7 +5,10 @@ Script to export data of all tasks from all employees in JSON format.
 
 Requirements:
 - Records all tasks from all employees
-- Format must be: { "USER_ID": [ {"username": "USERNAME", "task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS}, ... ]}
+- Format must be:
+{"USER_ID": [ {"username": "USERNAME",
+"task": "TASK_TITLE",
+"completed": TASK_COMPLETED_STATUS}, ... ]}
 - File name must be: todo_all_employees.json
 """
 
@@ -15,10 +18,10 @@ import requests
 if __name__ == "__main__":
     # Initialize an empty dictionary to store employee data
     employee_data = {}
-    
+
     # URL to fetch user data
     users_url = "https://jsonplaceholder.typicode.com/users"
-    
+
     # Fetch the list of users
     users = requests.get(users_url).json()
 
@@ -28,7 +31,9 @@ if __name__ == "__main__":
         username = user.get("username")
 
         # URL to fetch tasks for the current user
-        tasks_url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+        tasks_url = (
+            f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+        )
         tasks = requests.get(tasks_url).json()
 
         # Create a list of task dictionaries for the current user
