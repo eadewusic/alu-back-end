@@ -58,10 +58,10 @@ def main():
                     task_title = task.get("title")
                     task_completed = task.get("completed")
                     writer.writerow([
-                    user_id,
-                    username,
-                    task_completed,
-                    task_title
+                        user_id,
+                        username,
+                        task_completed,
+                        task_title
                 ])
 
             print(f"Data exported to {csv_filename}")
