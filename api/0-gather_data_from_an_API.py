@@ -18,9 +18,13 @@ def main():
     else:
         employee_id = int(argv[1])
 
+        base_url = "https://jsonplaceholder.typicode.com/users"
+        user_url = f"{base_url}/{employee_id}"
+        todos_url = f"{base_url}/{employee_id}/todos"
+
         # Fetch employee data and their tasks from the REST API
-        user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}")
-        todos_response = requests.get(f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}")
+        user_response = requests.get(user_url)
+        todos_response = requests.get(todos_url)
 
         if user_response.status_code != 200:
             print("User not found")
