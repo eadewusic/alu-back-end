@@ -23,28 +23,27 @@ def main():
         user_url = f"{base_url}/{employee_id}"
         todos_url = f"{base_url}/{employee_id}/todos"
 
+    try:
         # Fetch employee data and their tasks from the REST API
         user_response = requests.get(user_url)
         todos_response = requests.get(todos_url)
 
-        if user_response.status_code != 200:
-            print("User not found")
-        elif todos_response.status_code != 200:
-            print("Tasks not found")
-        else:
-            user_data = user_response.json()
-            todo_data = todos_response.json()
+        user_response.raise_for_status()
+        todos_response.raise_for_status()
 
-            # Extract user information
-            user_id = user_data.get("id")
-            username = user_data.get("username")
+        user_data = user_response.json()
+        todo_data = todos_response.json()
 
-            # Define the CSV filename based on user_id
-            csv_filename = f"{user_id}.csv"
+        # Extract user information
+        user_id = user_data.get("id")
+        username = user_data.get("username")
 
-            # Open the CSV file for writing
-            with open(csv_filename, mode="w", newline="") as csv_file:
-                writer = csv.writer(csv_file)
+        # Define the CSV filename based on user_id
+        csv_filename = f"{user_id}.csv"
+
+        # Open the CSV file for writing
+        with open(csv_filename, mode="w", newline="") as csv_file:
+            writer = csv.writer(csv_file)
                 # Write the header row to the CSV file
                 writer.writerow([
                     "USER_ID",
@@ -65,6 +64,14 @@ def main():
                     ])
 
             print(f"Data exported to {csv_filename}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred while making a request: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     main()
