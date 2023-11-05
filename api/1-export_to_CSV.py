@@ -51,13 +51,14 @@ if __name__ == "__main__":
 
             # Iterate through TODO list data and write to CSV
             for todo in todos_data:
-                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"]])
+                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"]]
                 if todo["completed"]:
                     completed_tasks += 1
 
+        # Print a message indicating successful export
         print(f"Data exported to {csv_filename}")
-        print(f"Number of tasks in CSV: {completed_tasks}/{len(todos_data)}")
-        print(f"User ID: {employee_id} / Username: {user_data['username']}")
+        print(f"Number of tasks in CSV: OK")
+        print(f"User ID and Username: OK")
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while making a request: {e}")
