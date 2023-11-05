@@ -62,7 +62,7 @@ def main():
                         username,
                         task_completed,
                         task_title
-                ])
+                    ])
 
             print(f"Data exported to {csv_filename}")
 
