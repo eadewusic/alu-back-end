@@ -2,12 +2,14 @@
 import requests
 from sys import argv
 
+
 """
 This script fetches and displays an employee's TODO list progress using a REST API.
 
 Usage:
     ./0-gather_data_from_an_API.py <employee_id>
 """
+
 
 def main():
     if len(argv) != 2 or not argv[1].isdigit():
