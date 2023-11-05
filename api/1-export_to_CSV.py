@@ -5,10 +5,6 @@ This script fetches and displays an employee's TODO list and exports the data in
 Usage:
     ./1-export_to_CSV.py <employee_id>
 """
-import csv
-import requests
-from sys import argv
-
 if __name__ == "__main__":
     import csv
     import requests
