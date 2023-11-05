@@ -39,6 +39,10 @@ if __name__ == "__main__":
     # Open the CSV file for writing
     with open(filename, 'w', newline='') as csvfile:
         # Create a CSV writer object
+        data_writer = csv.writer(
+            csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL
+        )
+        
         data_writer = csv.writer(csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
         
         # Iterate through the tasks and write to the CSV file
