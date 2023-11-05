@@ -1,9 +1,15 @@
 #!/usr/bin/python3
 """
-This script fetches and displays an employee's TODO list and exports the data in CSV format.
+Using what you did in the task #0,
+extend your Python script to export
+data in the CSV format.
 
-Usage:
-    ./1-export_to_CSV.py <employee_id>
+Requirements:
+
+Records all tasks that are owned by this employee
+Format must be:
+"USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
+File name must be: USER_ID.csv
 """
 if __name__ == "__main__":
     import csv
@@ -40,18 +46,11 @@ if __name__ == "__main__":
             # Write the CSV header
             data_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
-            # Initialize counters for completed tasks and tasks in CSV
-            completed_tasks = 0
-
             # Iterate through TODO list data and write to CSV
             for todo in todos_data:
-                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"])
-                if todo["completed"]:
-                    completed_tasks += 1
+                data_writer.writerow([employee_id, user_data["username"], todo["completed"], todo["title"]])
 
         print(f"Data exported to {csv_filename}")
-        print(f"Number of tasks in CSV: {completed_tasks}/{len(todos_data)}")
-        print(f"User ID: {employee_id} / Username: {user_data['username']}")
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while making a request: {e}")
