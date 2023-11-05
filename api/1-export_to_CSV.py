@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 This script fetches and displays an employee's TODO
 list and exports the data in CSV format.
@@ -7,7 +6,6 @@ list and exports the data in CSV format.
 Usage:
     ./1-export_to_CSV.py <employee_id>
 """
-
 import csv
 import requests
 from sys import argv
