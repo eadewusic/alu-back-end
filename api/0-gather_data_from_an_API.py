@@ -38,7 +38,8 @@ def main():
             print(f"Employee {employee_name} is done with tasks({done_tasks}/{total_tasks}):")
             for task in todo_data:
                 if task.get("completed"):
-                    print(f"\t{task.get('title')}")
+                    title = task.get("title")
+                    print(f"\t{title}" if len(title) <= 50 else f"\t{title[:50]}...")
 
 if __name__ == "__main__":
     main()
