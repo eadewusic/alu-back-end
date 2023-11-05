@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Using what you did in the task #0,
 extend your Python script to export
@@ -11,6 +12,7 @@ Format must be:
 "USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
 File name must be: USER_ID.csv
 """
+
 if __name__ == "__main__":
     import csv
     import requests
@@ -19,7 +21,7 @@ if __name__ == "__main__":
     # Define the base URLs for API requests
     todo_url = "https://jsonplaceholder.typicode.com/todos"
     user_url = f"https://jsonplaceholder.typicode.com/users/{sys.argv[1]}"
-    
+
     # Create a payload with the 'userId' query parameter
     payload = {"userId": sys.argv[1]}
 
