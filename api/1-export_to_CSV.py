@@ -21,7 +21,7 @@ def main():
         base_url = "https://jsonplaceholder.typicode.com/users"
         user_url = f"{base_url}/{employee_id}"
         todos_url = f"{base_url}/{employee_id}/todos"
-
+        
     try:
         # Fetch employee data and their tasks from the REST API
         user_response = requests.get(user_url)
