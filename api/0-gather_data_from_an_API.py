@@ -2,12 +2,14 @@
 import requests
 from sys import argv
 
+# This is a module-level docstring. It provides an overview of the script's purpose.
+
 if __name__ == "__main__":
     # Check for the correct number of command-line arguments and whether the argument is a valid integer
     if len(argv) != 2 or not argv[1].isdigit():
         print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
     else:
-        employee_id = int(argv[1]
+        employee_id = int(argv[1])
 
         # Fetch employee data and their tasks from the REST API
         user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{employee_id}")
