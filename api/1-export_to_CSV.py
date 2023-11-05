@@ -8,8 +8,8 @@ Usage:
     ./1-export_to_CSV.py <employee_id>
 """
 
-import requests
 import csv
+import requests
 from sys import argv
 
 
