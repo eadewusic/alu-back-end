@@ -1,55 +1,31 @@
 #!/usr/bin/python3
-
 """
-This script fetches and displays an employee's TODO list
-progress using a REST API.
-
-Usage:
-    ./0-gather_data_from_an_API.py <employee_id>
+Defines a function that queries the Reddit API and returns the number of subscribers.
 """
 
 import requests
-from sys import argv
 
+def number_of_subscribers(subreddit):
+    '''
+    Queries the Reddit API and returns the number of subscribers.
 
-def main():
-    if len(argv) != 2 or not argv[1].isdigit():
-        print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
+    Args:
+        subreddit (str): The name of the subreddit.
+
+    Returns:
+        int: The number of subscribers. Returns 0 for an invalid subreddit.
+    '''
+    if subreddit is None or not isinstance(subreddit, str):
+        return 0
+
+    endpoint = 'https://www.reddit.com'
+    headers = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'}
+
+    # Use f-string for better readability
+    info = requests.get(f'{endpoint}/r/{subreddit}/about.json', headers=headers, allow_redirects=False)
+
+    if info.status_code == 200:
+        json_info = info.json()
+        return json_info.get('data').get('subscribers')
     else:
-        employee_id = int(argv[1])
-
-        base_url = "https://jsonplaceholder.typicode.com/users"
-        user_url = f"{base_url}/{employee_id}"
-        todos_url = f"{base_url}/{employee_id}/todos"
-
-        # Fetch employee data and their tasks from the REST API
-        user_response = requests.get(user_url)
-        todos_response = requests.get(todos_url)
-
-        if user_response.status_code != 200:
-            print("User not found")
-        elif todos_response.status_code != 200:
-            print("Tasks not found")
-        else:
-            user_data = user_response.json()
-            todo_data = todos_response.json()
-
-            # Extract employee name
-            employee_name = user_data.get("name")
-            # Count the total number of tasks and completed tasks
-            total_tasks = len(todo_data)
-            done_tasks = sum(1 for task in todo_data if task.get("completed"))
-
-            # Print the progress information in the required format
-            progress_message = (
-                f"Employee {employee_name} is done with tasks"
-                f"({done_tasks}/{total_tasks}):"
-            )
-            print(progress_message)
-
-            for task in todo_data:
-                if task.get("completed"):
-                    print(f"\t {task.get('title')}")
-
-if __name__ == "__main__":
-    main()
+        return 0
